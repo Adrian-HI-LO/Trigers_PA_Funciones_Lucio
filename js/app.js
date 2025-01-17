@@ -273,6 +273,9 @@ document.addEventListener('DOMContentLoaded', () => {
         userOptions.style.display = 'block';
     }
 
+    // Cargar cursos desde la base de datos
+    cargarCursos();
+
     // Funciones para agregar y eliminar cursos
     const agregarCurso = (e) => {
         e.preventDefault();
@@ -353,3 +356,50 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#agregar-curso_admin').addEventListener('click', agregarCurso);
     document.querySelector('#eliminar-curso_admin').addEventListener('click', eliminarCurso);
 });
+
+const cargarCursos = () => {
+    fetch('http://localhost:3000/cargar_cursos')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const cursos = data.cursos;
+                cursos.forEach(curso => {
+                    const { id, titulo, autor, precio, descuento, imagen } = curso;
+                    const row = document.querySelector('#lista-cursos .row:last-child');
+                    const cursosEnFila = row.querySelectorAll('.four.columns').length;
+
+                    const nuevoCurso = `
+                        <div class="four columns">
+                            <div class="card">
+                                <img src="${imagen}" class="imagen-curso u-full-width">
+                                <div class="info-card">
+                                    <h4>${titulo}</h4>
+                                    <p>${autor}</p>
+                                    <img src="img/estrellas.png">
+                                    <p class="precio">$${precio} <span class="u-pull-right ">$${descuento}</span></p>
+                                    <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="${id}">Agregar Al Carrito</a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    // Si la fila actual tiene menos de 3 cursos, agregar el nuevo curso a la fila actual
+                    if (cursosEnFila < 3) {
+                        row.insertAdjacentHTML('beforeend', nuevoCurso);
+                    } else {
+                        // Si la fila actual ya tiene 3 cursos, crear una nueva fila y agregar el nuevo curso
+                        const nuevaFila = document.createElement('div');
+                        nuevaFila.classList.add('row');
+                        nuevaFila.innerHTML = nuevoCurso;
+                        document.querySelector('#lista-cursos').appendChild(nuevaFila);
+                    }
+                });
+            } else {
+                alert('Error al cargar cursos');
+            }
+        })
+        .catch(error => {
+            console.error('Error al cargar cursos:', error);
+            alert('Error al cargar cursos');
+        });
+};

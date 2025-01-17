@@ -110,6 +110,17 @@ app.post('/eliminar_curso', (req, res) => {
     });
 });
 
+app.get('/cargar_cursos', (req, res) => {
+    const query = 'SELECT * FROM cursos';
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error al cargar cursos:', err);
+            return res.json({ success: false, error: err });
+        }
+        res.json({ success: true, cursos: results });
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
