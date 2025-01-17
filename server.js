@@ -46,6 +46,7 @@ app.post('/login', (req, res) => {
         if (results.length > 0) {
             const match = await bcrypt.compare(password, results[0].password); // Comparar contraseñas
             if (match) {
+                console.log('is_admin:', results[0].is_admin); // Agregar mensaje de consola
                 res.json({ success: true, cliente_id: results[0].id, is_admin: results[0].is_admin });
             } else {
                 res.json({ success: false, message: 'Contraseña incorrecta' });
@@ -82,6 +83,30 @@ app.get('/ver_compras', (req, res) => {
             return res.json({ success: false, error: err });
         }
         res.json({ success: true, compras: results });
+    });
+});
+
+app.post('/agregar_curso', (req, res) => {
+    const { titulo, autor, precio, descuento, imagen } = req.body;
+    const query = 'CALL agregar_curso(?, ?, ?, ?, ?)';
+    connection.query(query, [titulo, autor, precio, descuento, imagen], (err, results) => {
+        if (err) {
+            console.error('Error al agregar curso:', err);
+            return res.json({ success: false, error: err });
+        }
+        res.json({ success: true });
+    });
+});
+
+app.post('/eliminar_curso', (req, res) => {
+    const { curso_id } = req.body;
+    const query = 'CALL eliminar_curso(?)';
+    connection.query(query, [curso_id], (err, results) => {
+        if (err) {
+            console.error('Error al eliminar curso:', err);
+            return res.json({ success: false, error: err });
+        }
+        res.json({ success: true });
     });
 });
 

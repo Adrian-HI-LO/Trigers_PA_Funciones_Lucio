@@ -60,6 +60,24 @@ END;
 //
 DELIMITER ;
 
+-- Crear procedimiento almacenado para agregar cursos
+DELIMITER //
+CREATE PROCEDURE agregar_curso(IN titulo VARCHAR(100), IN autor VARCHAR(100), IN precio DECIMAL(10, 2), IN descuento DECIMAL(10, 2), IN imagen VARCHAR(255))
+BEGIN
+    INSERT INTO cursos (titulo, autor, precio, descuento, imagen) VALUES (titulo, autor, precio, descuento, imagen);
+END;
+//
+DELIMITER ;
+
+-- Crear procedimiento almacenado para eliminar cursos
+DELIMITER //
+CREATE PROCEDURE eliminar_curso(IN curso_id INT)
+BEGIN
+    DELETE FROM cursos WHERE id = curso_id;
+END;
+//
+DELIMITER ;
+
 -- Estos son los cursos que estan en mi interfaz
 INSERT INTO cursos (id, titulo, autor, precio, descuento, imagen) VALUES
                                                                       (1, 'HTML5, CSS3, JavaScript para Principiantes', 'Juan Pedro', 200.00, 15.00, 'img/curso1.jpg'),

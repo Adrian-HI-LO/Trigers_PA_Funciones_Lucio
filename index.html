@@ -269,11 +269,25 @@
             <div class="twelve columns" id="user-options">
                 <button id="ver-compras" class="button-primary u-full-width">Ver Compras</button>
             </div>
-            <div class="twelve columns" id="admin-options" style="display: none;">
-                <button id="agregar-curso" class="button-primary u-full-width">Agregar Curso</button>
-                <button id="eliminar-curso" class="button-primary u-full-width">Eliminar Curso</button>
-            </div>
         </div>
+        <div id="admin-options" class="flex gap-5">
+            <button 
+                type="submit"
+                class="flex-1 bg-pink-600 text-white flex justify-center gap-2 items-center p-3 opacity-50"
+                disabled
+                id="agregar-curso_admin"
+            >
+                Agregar Curso
+            </button>
+            <button 
+            type="submit"
+            class="flex-1 bg-pink-600 text-white flex justify-center gap-2 items-center p-3 opacity-50"
+            disabled
+            id="eliminar-curso_admin"
+        >
+            Eliminar Curso
+        </button>
+        </div>        
     </div>
 
     <script src="js/app.js"></script>

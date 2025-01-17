@@ -256,60 +256,101 @@ const mostrarCompras = (compras) => {
      document.body.appendChild(comprasContainer);
 };
 
-const isAdmin = localStorage.getItem('is_admin') === 'true';
+document.addEventListener('DOMContentLoaded', () => {
+    const isAdmin = localStorage.getItem('is_admin') === 'true' || localStorage.getItem('is_admin') === '1';
+    console.log('isAdmin:', isAdmin); // Agregar mensaje de consola
 
-if (isAdmin) {
-    document.querySelector('#admin-options').style.display = 'block';
-    document.querySelector('#user-options').style.display = 'none';
-} else {
-    document.querySelector('#admin-options').style.display = 'none';
-    document.querySelector('#user-options').style.display = 'block';
-}
+    const adminOptions = document.querySelector('#admin-options');
+    const userOptions = document.querySelector('#user-options');
+    console.log('adminOptions:', adminOptions); // Agregar mensaje de consola
+    console.log('userOptions:', userOptions); // Agregar mensaje de consola
 
-// Funciones para agregar y eliminar cursos
-const agregarCurso = () => {
-    const titulo = prompt('Ingrese el título del curso:');
-    const autor = prompt('Ingrese el autor del curso:');
-    const precio = prompt('Ingrese el precio del curso:');
-    const descuento = prompt('Ingrese el descuento del curso:');
-    const imagen = prompt('Ingrese la URL de la imagen del curso:');
-    fetch('http://localhost:3000/agregar_curso', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ titulo, autor, precio, descuento, imagen })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Curso agregado con éxito');
-            window.location.reload();
-        } else {
-            alert('Error al agregar curso');
-        }
-    });
-};
+    if (isAdmin) {
+        adminOptions.style.display = 'block';
+        userOptions.style.display = 'none';
+    } else {
+        adminOptions.style.display = 'none';
+        userOptions.style.display = 'block';
+    }
 
-const eliminarCurso = () => {
-    const curso_id = prompt('Ingrese el ID del curso a eliminar:');
-    fetch('http://localhost:3000/eliminar_curso', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ curso_id })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Curso eliminado con éxito');
-            window.location.reload();
-        } else {
-            alert('Error al eliminar curso');
-        }
-    });
-};
+    // Funciones para agregar y eliminar cursos
+    const agregarCurso = () => {
+        const titulo = prompt('Ingrese el título del curso:');
+        const autor = prompt('Ingrese el autor del curso:');
+        const precio = prompt('Ingrese el precio del curso:');
+        const descuento = prompt('Ingrese el descuento del curso:');
+        const imagen = prompt('Ingrese la URL de la imagen del curso:');
 
-document.querySelector('#agregar-curso').addEventListener('click', agregarCurso);
-document.querySelector('#eliminar-curso').addEventListener('click', eliminarCurso);
+        // Agregar los cursos en la Pagina
+        const row = document.querySelector('.row:last-child');
+        const cursosEnFila = row.querySelectorAll('.four.columns').length;
+
+        
+        const nuevoCurso = `
+            <div class="four columns">
+                <div class="card">
+                    <img src="${imagen}" class="imagen-curso u-full-width">
+                    <div class="info-card">
+                        <h4>${titulo}</h4>
+                        <p>${autor}</p>
+                        <img src="img/estrellas.png">
+                        <p class="precio">$${precio} <span class="u-pull-right ">$${descuento}</span></p>
+                        <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="${Date.now()}">Agregar Al Carrito</a>
+                    </div>
+                </div>
+            </div>
+        `;
+
+         // Si la fila actual tiene menos de 3 cursos, agregar el nuevo curso a la fila actual
+         if (cursosEnFila < 3) {
+              row.insertAdjacentHTML('beforeend', nuevoCurso);
+          } else {
+              // Si la fila actual ya tiene 3 cursos, crear una nueva fila y agregar el nuevo curso
+              const nuevaFila = document.createElement('div');
+              nuevaFila.classList.add('row');
+              nuevaFila.innerHTML = nuevoCurso;
+              document.querySelector('.container').appendChild(nuevaFila);
+          }
+
+        //Enviar los cursos al servidor
+        fetch('http://localhost:3000/agregar_curso', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ titulo, autor, precio, descuento, imagen })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Curso agregado con éxito');
+                window.location.reload();
+            } else {
+                alert('Error al agregar curso');
+            }
+        });
+    };
+
+    const eliminarCurso = () => {
+        const curso_id = prompt('Ingrese el ID del curso a eliminar:');
+        fetch('http://localhost:3000/eliminar_curso', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ curso_id })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Curso eliminado con éxito');
+                window.location.reload();
+            } else {
+                alert('Error al eliminar curso');
+            }
+        });
+    };
+
+    document.querySelector('#agregar-curso_admin').addEventListener('submit', agregarCurso);
+    document.querySelector('#eliminar-curso_admin').addEventListener('click', eliminarCurso);
+});
