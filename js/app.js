@@ -274,7 +274,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Funciones para agregar y eliminar cursos
-    const agregarCurso = () => {
+    const agregarCurso = (e) => {
+        e.preventDefault();
         const titulo = prompt('Ingrese el título del curso:');
         const autor = prompt('Ingrese el autor del curso:');
         const precio = prompt('Ingrese el precio del curso:');
@@ -285,7 +286,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const row = document.querySelector('.row:last-child');
         const cursosEnFila = row.querySelectorAll('.four.columns').length;
 
-        
         const nuevoCurso = `
             <div class="four columns">
                 <div class="card">
@@ -301,16 +301,16 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-         // Si la fila actual tiene menos de 3 cursos, agregar el nuevo curso a la fila actual
-         if (cursosEnFila < 3) {
-              row.insertAdjacentHTML('beforeend', nuevoCurso);
-          } else {
-              // Si la fila actual ya tiene 3 cursos, crear una nueva fila y agregar el nuevo curso
-              const nuevaFila = document.createElement('div');
-              nuevaFila.classList.add('row');
-              nuevaFila.innerHTML = nuevoCurso;
-              document.querySelector('.container').appendChild(nuevaFila);
-          }
+        // Si la fila actual tiene menos de 3 cursos, agregar el nuevo curso a la fila actual
+        if (cursosEnFila < 3) {
+            row.insertAdjacentHTML('beforeend', nuevoCurso);
+        } else {
+            // Si la fila actual ya tiene 3 cursos, crear una nueva fila y agregar el nuevo curso
+            const nuevaFila = document.createElement('div');
+            nuevaFila.classList.add('row');
+            nuevaFila.innerHTML = nuevoCurso;
+            document.querySelector('.container').appendChild(nuevaFila);
+        }
 
         //Enviar los cursos al servidor
         fetch('http://localhost:3000/agregar_curso', {
@@ -331,7 +331,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const eliminarCurso = () => {
+    const eliminarCurso = (e) => {
+        e.preventDefault();
         const curso_id = prompt('Ingrese el ID del curso a eliminar:');
         fetch('http://localhost:3000/eliminar_curso', {
             method: 'POST',
@@ -351,6 +352,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    document.querySelector('#agregar-curso_admin').addEventListener('submit', agregarCurso);
+    document.querySelector('#agregar-curso_admin').addEventListener('click', agregarCurso);
     document.querySelector('#eliminar-curso_admin').addEventListener('click', eliminarCurso);
 });
