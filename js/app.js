@@ -282,36 +282,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const descuento = prompt('Ingrese el descuento del curso:');
         const imagen = prompt('Ingrese la URL de la imagen del curso:');
 
-        // Agregar los cursos en la Pagina
-        const row = document.querySelector('.row:last-child');
-        const cursosEnFila = row.querySelectorAll('.four.columns').length;
-
-        const nuevoCurso = `
-            <div class="four columns">
-                <div class="card">
-                    <img src="${imagen}" class="imagen-curso u-full-width">
-                    <div class="info-card">
-                        <h4>${titulo}</h4>
-                        <p>${autor}</p>
-                        <img src="img/estrellas.png">
-                        <p class="precio">$${precio} <span class="u-pull-right ">$${descuento}</span></p>
-                        <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="${Date.now()}">Agregar Al Carrito</a>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        // Si la fila actual tiene menos de 3 cursos, agregar el nuevo curso a la fila actual
-        if (cursosEnFila < 3) {
-            row.insertAdjacentHTML('beforeend', nuevoCurso);
-        } else {
-            // Si la fila actual ya tiene 3 cursos, crear una nueva fila y agregar el nuevo curso
-            const nuevaFila = document.createElement('div');
-            nuevaFila.classList.add('row');
-            nuevaFila.innerHTML = nuevoCurso;
-            document.querySelector('.container').appendChild(nuevaFila);
-        }
-
         //Enviar los cursos al servidor
         fetch('http://localhost:3000/agregar_curso', {
             method: 'POST',
@@ -324,7 +294,35 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             if (data.success) {
                 alert('Curso agregado con éxito');
-                window.location.reload();
+                // Agregar los cursos en la Pagina
+                const row = document.querySelector('.row:last-child');
+                const cursosEnFila = row.querySelectorAll('.four.columns').length;
+
+                const nuevoCurso = `
+                    <div class="four columns">
+                        <div class="card">
+                            <img src="${imagen}" class="imagen-curso u-full-width">
+                            <div class="info-card">
+                                <h4>${titulo}</h4>
+                                <p>${autor}</p>
+                                <img src="img/estrellas.png">
+                                <p class="precio">$${precio} <span class="u-pull-right ">$${descuento}</span></p>
+                                <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="${Date.now()}">Agregar Al Carrito</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Si la fila actual tiene menos de 3 cursos, agregar el nuevo curso a la fila actual
+                if (cursosEnFila < 3) {
+                    row.insertAdjacentHTML('beforeend', nuevoCurso);
+                } else {
+                    // Si la fila actual ya tiene 3 cursos, crear una nueva fila y agregar el nuevo curso
+                    const nuevaFila = document.createElement('div');
+                    nuevaFila.classList.add('row');
+                    nuevaFila.innerHTML = nuevoCurso;
+                    document.querySelector('.container').appendChild(nuevaFila);
+                }
             } else {
                 alert('Error al agregar curso');
             }
