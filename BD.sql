@@ -101,12 +101,12 @@ DELIMITER ;
 
 -- Crear función para obtener el total de compras de un cliente
 DELIMITER //
-CREATE FUNCTION obtener_total_compras(cliente_id INT) RETURNS DECIMAL(10, 2)
+CREATE FUNCTION obtener_total_compras(cliente INT) RETURNS DECIMAL(10, 2)
 DETERMINISTIC
 READS SQL DATA
 BEGIN
     DECLARE total DECIMAL(10, 2);
-    SET total = (SELECT IFNULL(SUM(total), 0) FROM compras WHERE cliente_id = cliente_id);
+    SET total = (SELECT IFNULL(SUM(total), 0) FROM compras WHERE cliente_id = cliente);
     RETURN total;
 END;
 //
@@ -126,3 +126,69 @@ INSERT INTO cursos (id, titulo, autor, precio, descuento, imagen) VALUES
                                                                       (10, 'Prepara galletas caseras', 'Juan Pedro', 200.00, 15.00, 'img/curso5.jpg'),
                                                                       (11, 'JavaScript Moderno con ES6', 'Juan Pedro', 200.00, 15.00, 'img/curso1.jpg'),
                                                                       (12, '100 Recetas de Comida Natural', 'Juan Pedro', 200.00, 15.00, 'img/curso2.jpg');
+
+
+-- Primero eliminamos el trigger y la función existentes
+DROP TRIGGER IF EXISTS after_insert_compra;
+DROP FUNCTION IF EXISTS obtener_total_compras;
+
+-- Recreamos la función para obtener el total de compras
+DELIMITER //
+CREATE FUNCTION obtener_total_compras(cliente INT)
+RETURNS DECIMAL(10, 2)
+DETERMINISTIC
+READS SQL DATA
+BEGIN
+    DECLARE total DECIMAL(10, 2);
+
+    -- Calculamos el total sumando (precio con descuento * cantidad) para cada compra
+    SELECT COALESCE(SUM(c.total), 0) INTO total
+    FROM compras c
+    WHERE c.cliente_id = cliente;
+
+    RETURN total;
+END;
+//
+DELIMITER ;
+
+-- Recreamos el trigger para mantener actualizado el total
+DELIMITER //
+CREATE TRIGGER after_insert_compra
+AFTER INSERT ON compras
+FOR EACH ROW
+BEGIN
+    -- Calculamos el nuevo total
+    DECLARE nuevo_total DECIMAL(10, 2);
+
+    SELECT COALESCE(SUM(total), 0) INTO nuevo_total
+    FROM compras
+    WHERE cliente_id = NEW.cliente_id;
+
+    -- Actualizamos o insertamos en clientes_compras
+    INSERT INTO clientes_compras (cliente_id, total_compras)
+    VALUES (NEW.cliente_id, nuevo_total)
+    ON DUPLICATE KEY UPDATE total_compras = nuevo_total;
+END;
+//
+DELIMITER ;
+
+-- Trigger para actualizar cuando se elimina una compra
+DELIMITER //
+CREATE TRIGGER after_delete_compra
+AFTER DELETE ON compras
+FOR EACH ROW
+BEGIN
+    -- Calculamos el nuevo total
+    DECLARE nuevo_total DECIMAL(10, 2);
+
+    SELECT COALESCE(SUM(total), 0) INTO nuevo_total
+    FROM compras
+    WHERE cliente_id = OLD.cliente_id;
+
+    -- Actualizamos clientes_compras
+    UPDATE clientes_compras
+    SET total_compras = nuevo_total
+    WHERE cliente_id = OLD.cliente_id;
+END;
+//
+DELIMITER ;

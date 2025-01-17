@@ -430,6 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('#agregar-curso_admin').addEventListener('click', agregarCurso);
     document.querySelector('#eliminar-curso_admin').addEventListener('click', eliminarCurso);
+    document.querySelector('#ver-total-compras').addEventListener('click', mostrarTotalCompras);
 });
 
 const cargarCursos = () => {
