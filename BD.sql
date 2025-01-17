@@ -11,7 +11,7 @@ CREATE TABLE clientes (
 );
 
 -- Insertar usuario administrador
-INSERT INTO clientes (nombre, email, password, is_admin) VALUES ('Admin', 'admin@example.com', '$2b$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36Zf4d0x1L1b1X1b1X1b1X1', TRUE);
+INSERT INTO clientes (nombre, email, password, is_admin) VALUES ('Admin', 'admin@example.com', '$2b$10$RO3oQlxibykVUi0PvY0DmuD4HfLqPx24Oo/QuXoG2aWtr9h84f0Ni', TRUE);
 
 SELECT * FROM compras;
 SELECT * FROM clientes;
@@ -73,6 +73,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE eliminar_curso(IN curso_id INT)
 BEGIN
+    DELETE FROM compras WHERE curso_id = curso_id;
     DELETE FROM cursos WHERE id = curso_id;
 END;
 //

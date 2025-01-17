@@ -352,23 +352,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const eliminarCurso = (e) => {
         e.preventDefault();
-        const curso_id = prompt('Ingrese el ID del curso a eliminar:');
-        fetch('http://localhost:3000/eliminar_curso', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ curso_id })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Curso eliminado con éxito');
-                window.location.reload();
-            } else {
-                alert('Error al eliminar curso');
-            }
-        });
+        const tablaEliminarCurso = document.querySelector('#tabla-eliminar-curso');
+        const cursosTabla = document.querySelector('#cursos-tabla');
+        cursosTabla.innerHTML = ''; // Limpiar tabla
+
+        fetch('http://localhost:3000/cargar_cursos')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const cursos = data.cursos;
+                    cursos.forEach(curso => {
+                        const { id, titulo } = curso;
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${id}</td>
+                            <td>${titulo}</td>
+                            <td><button class="btn btn-danger btn-sm eliminar-curso" data-id="${id}"><i class="bi bi-trash"></i></button></td>
+                        `;
+                        cursosTabla.appendChild(row);
+                    });
+
+                    // Mostrar tabla
+                    tablaEliminarCurso.style.display = 'block';
+
+                    // Agregar eventos a los botones de eliminar
+                    document.querySelectorAll('.eliminar-curso').forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            const cursoId = e.target.getAttribute('data-id');
+                            fetch('http://localhost:3000/eliminar_curso', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ curso_id: cursoId })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    alert('Curso eliminado con éxito');
+                                    row.remove();
+                                } else {
+                                    alert('Error al eliminar curso');
+                                }
+                            });
+                        });
+                    });
+                } else {
+                    alert('Error al cargar cursos');
+                }
+            });
     };
 
     document.querySelector('#agregar-curso_admin').addEventListener('click', agregarCurso);
