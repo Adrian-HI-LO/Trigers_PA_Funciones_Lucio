@@ -86,6 +86,18 @@ app.get('/ver_compras', (req, res) => {
     });
 });
 
+app.get('/total_compras', (req, res) => {
+    const { cliente_id } = req.query;
+    const query = 'SELECT obtener_total_compras(?) AS total_compras';
+    connection.query(query, [cliente_id], (err, results) => {
+        if (err) {
+            console.error('Error al obtener el total de compras:', err);
+            return res.json({ success: false, error: err });
+        }
+        res.json({ success: true, total_compras: results[0].total_compras });
+    });
+});
+
 app.post('/agregar_curso', (req, res) => {
     const { titulo, autor, precio, descuento, imagen } = req.body;
     const query = 'CALL agregar_curso(?, ?, ?, ?, ?)';

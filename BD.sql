@@ -36,6 +36,12 @@ CREATE TABLE compras (
                          FOREIGN KEY (curso_id) REFERENCES cursos(id)
 );
 
+CREATE TABLE clientes_compras (
+    cliente_id INT PRIMARY KEY,
+    total_compras DECIMAL(10, 2),
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+);
+
 DROP TRIGGER IF EXISTS actualizar_total_compra;
 
 -- Crear procedimiento almacenado para registrar a los Clientes
@@ -75,6 +81,33 @@ CREATE PROCEDURE eliminar_curso(IN curso_id INT)
 BEGIN
     DELETE FROM compras WHERE curso_id = curso_id;
     DELETE FROM cursos WHERE id = curso_id;
+END;
+//
+DELIMITER ;
+
+-- Crear trigger para actualizar el total de compras después de insertar una compra
+DELIMITER //
+CREATE TRIGGER after_insert_compra
+AFTER INSERT ON compras
+FOR EACH ROW
+BEGIN
+    DECLARE total DECIMAL(10, 2);
+    SET total = (SELECT SUM(total) FROM compras WHERE cliente_id = NEW.cliente_id);
+    INSERT INTO clientes_compras (cliente_id, total_compras) VALUES (NEW.cliente_id, total)
+    ON DUPLICATE KEY UPDATE total_compras = total;
+END;
+//
+DELIMITER ;
+
+-- Crear función para obtener el total de compras de un cliente
+DELIMITER //
+CREATE FUNCTION obtener_total_compras(cliente_id INT) RETURNS DECIMAL(10, 2)
+DETERMINISTIC
+READS SQL DATA
+BEGIN
+    DECLARE total DECIMAL(10, 2);
+    SET total = (SELECT IFNULL(SUM(total), 0) FROM compras WHERE cliente_id = cliente_id);
+    RETURN total;
 END;
 //
 DELIMITER ;

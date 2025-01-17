@@ -151,16 +151,16 @@ const eliminarCursos = cursoSeleccionado => {
 }
 
 const deleteAllcar = () => {
-     if ( articulosCarrito.length > 0 ) {
-          articulosCarrito.length = 0
-          const contenedorDeTR = document.querySelector ( '#lista-carrito' ).lastElementChild
-          let cantidadNodosEliminar =  contenedorDeTR.querySelectorAll ( 'tr' ).length
-          for ( let i = 0; i < cantidadNodosEliminar; i ++ ){
+    if ( articulosCarrito.length > 0 ) {
+        articulosCarrito.length = 0
+        const contenedorDeTR = document.querySelector ( '#lista-carrito' ).lastElementChild
+        let cantidadNodosEliminar =  contenedorDeTR.querySelectorAll ( 'tr' ).length
+        for ( let i = 0; i < cantidadNodosEliminar; i ++ ){
                const nodosAeliminar = contenedorDeTR.querySelector( 'tr' )
                nodosAeliminar.remove()
           }
      }
-     const total_resultado = document.querySelectorAll ( '#total_resultado' )
+     const total_resultado = document.querySelector ( '#total_resultado' )
      if ( total_resultado ) {
           total_resultado.remove (  )
      }
@@ -274,21 +274,46 @@ const mostrarCompras = (compras) => {
     document.body.appendChild(comprasContainer);
 };
 
+const mostrarTotalCompras = () => {
+    const cliente_id = localStorage.getItem('cliente_id');
+    if (!cliente_id) {
+        alert('Por favor, inicie sesión para ver el total de sus compras.');
+        return;
+    }
+    fetch(`http://localhost:3000/total_compras?cliente_id=${cliente_id}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(`El total de sus compras es: $${data.total_compras}`);
+            } else {
+                alert('Error al obtener el total de compras');
+            }
+        })
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+            alert('Error al obtener el total de compras');
+        });
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     const isAdmin = localStorage.getItem('is_admin') === 'true' || localStorage.getItem('is_admin') === '1';
     console.log('isAdmin:', isAdmin); // Agregar mensaje de consola
 
     const adminOptions = document.querySelector('#admin-options');
     const userOptions = document.querySelector('#user-options');
+    const userOptionsButtons = document.querySelector('#user-options-buttons');
     console.log('adminOptions:', adminOptions); // Agregar mensaje de consola
     console.log('userOptions:', userOptions); // Agregar mensaje de consola
+    console.log('userOptionsButtons:', userOptionsButtons); // Agregar mensaje de consola
 
     if (isAdmin) {
         adminOptions.style.display = 'block';
         userOptions.style.display = 'none';
+        userOptionsButtons.style.display = 'none';
     } else {
         adminOptions.style.display = 'none';
         userOptions.style.display = 'block';
+        userOptionsButtons.style.display = 'block';
     }
 
     // Cargar cursos desde la base de datos
