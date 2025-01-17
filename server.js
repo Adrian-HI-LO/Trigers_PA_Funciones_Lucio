@@ -1,7 +1,8 @@
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
-const cors = require('cors'); // Importar cors
+const cors = require('cors');
+const bcrypt = require('bcrypt'); // Importar bcrypt
 const app = express();
 const port = 3000;
 
@@ -21,10 +22,11 @@ connection.connect(err => {
     console.log('Connected to MySQL');
 });
 
-app.post('/registrar_cliente', (req, res) => {
+app.post('/registrar_cliente', async (req, res) => {
     const { nombre, email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10); // Hashear la contraseña
     const query = 'CALL registrar_cliente(?, ?, ?)';
-    connection.query(query, [nombre, email, password], (err, results) => {
+    connection.query(query, [nombre, email, hashedPassword], (err, results) => {
         if (err) {
             console.error('Error al registrar cliente:', err);
             return res.json({ success: false, error: err });
@@ -35,16 +37,21 @@ app.post('/registrar_cliente', (req, res) => {
 
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
-    const query = 'SELECT id FROM clientes WHERE email = ? AND password = ?';
-    connection.query(query, [email, password], (err, results) => {
+    const query = 'SELECT id, password FROM clientes WHERE email = ?';
+    connection.query(query, [email], async (err, results) => {
         if (err) {
             console.error('Error al iniciar sesión:', err);
             return res.json({ success: false, error: err });
         }
         if (results.length > 0) {
-            res.json({ success: true, cliente_id: results[0].id });
+            const match = await bcrypt.compare(password, results[0].password); // Comparar contraseñas
+            if (match) {
+                res.json({ success: true, cliente_id: results[0].id });
+            } else {
+                res.json({ success: false, message: 'Contraseña incorrecta' });
+            }
         } else {
-            res.json({ success: false });
+            res.json({ success: false, message: 'Usuario no encontrado' });
         }
     });
 });
