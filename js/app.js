@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.success) {
                 alert('Curso agregado con éxito');
                 // Agregar los cursos en la Pagina
-                const row = document.querySelector('.row:last-child');
+                const row = document.querySelector('#lista-cursos .row:last-child');
                 const cursosEnFila = row.querySelectorAll('.four.columns').length;
 
                 const nuevoCurso = `
@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const nuevaFila = document.createElement('div');
                     nuevaFila.classList.add('row');
                     nuevaFila.innerHTML = nuevoCurso;
-                    document.querySelector('.container').appendChild(nuevaFila);
+                    document.querySelector('#lista-cursos').appendChild(nuevaFila);
                 }
             } else {
                 alert('Error al agregar curso');

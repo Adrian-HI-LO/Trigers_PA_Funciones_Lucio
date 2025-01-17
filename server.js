@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
     user: 'root',
     password: '20ADs34lL./', // Reemplaza 'tu_contraseña_aqui' con la contraseña correcta
     database: 'CarritoDB',
-    port: 3307
+    port: 3306
 });
 
 connection.connect(err => {
