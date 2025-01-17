@@ -35,6 +35,7 @@ document.querySelector('#login-form').addEventListener('submit', e => {
     .then(data => {
         if (data.success) {
             localStorage.setItem('cliente_id', data.cliente_id);
+            localStorage.setItem('is_admin', data.is_admin); // Almacenar estado de administrador
             window.location.href = 'index.html';
         } else {
             alert('Error al iniciar sesión');

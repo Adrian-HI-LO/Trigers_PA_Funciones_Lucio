@@ -37,7 +37,7 @@ app.post('/registrar_cliente', async (req, res) => {
 
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
-    const query = 'SELECT id, password FROM clientes WHERE email = ?';
+    const query = 'SELECT id, password, is_admin FROM clientes WHERE email = ?';
     connection.query(query, [email], async (err, results) => {
         if (err) {
             console.error('Error al iniciar sesión:', err);
@@ -46,7 +46,7 @@ app.post('/login', (req, res) => {
         if (results.length > 0) {
             const match = await bcrypt.compare(password, results[0].password); // Comparar contraseñas
             if (match) {
-                res.json({ success: true, cliente_id: results[0].id });
+                res.json({ success: true, cliente_id: results[0].id, is_admin: results[0].is_admin });
             } else {
                 res.json({ success: false, message: 'Contraseña incorrecta' });
             }

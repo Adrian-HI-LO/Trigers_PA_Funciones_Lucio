@@ -6,8 +6,13 @@ CREATE TABLE clientes (
                           id INT AUTO_INCREMENT PRIMARY KEY,
                           nombre VARCHAR(100),
                           email VARCHAR(100) UNIQUE,
-                          password VARCHAR(255) -- Aumentar longitud para almacenar hash
+                          password VARCHAR(255), -- Aumentar longitud para almacenar hash
+                          is_admin BOOLEAN DEFAULT FALSE -- Campo para identificar al administrador
 );
+
+-- Insertar usuario administrador
+INSERT INTO clientes (nombre, email, password, is_admin) VALUES ('Admin', 'admin@example.com', '$2b$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36Zf4d0x1L1b1X1b1X1b1X1', TRUE);
+
 SELECT * FROM compras;
 SELECT * FROM clientes;
 
