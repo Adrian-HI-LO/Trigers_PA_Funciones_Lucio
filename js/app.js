@@ -240,20 +240,38 @@ const verCompras = () => {
 };
 
 const mostrarCompras = (compras) => {
-     const comprasContainer = document.createElement('div');
-     comprasContainer.classList.add('compras-container');
-     compras.forEach(compra => {
-          const { titulo, cantidad, total } = compra;
-          const compraElement = document.createElement('div');
-          compraElement.classList.add('compra');
-          compraElement.innerHTML = `
-               <p>Curso: ${titulo}</p>
-               <p>Cantidad: ${cantidad}</p>
-               <p>Total: $${total}</p>
-          `;
-          comprasContainer.appendChild(compraElement);
-     });
-     document.body.appendChild(comprasContainer);
+    const comprasContainer = document.createElement('div');
+    comprasContainer.classList.add('compras-container');
+
+    const table = document.createElement('table');
+    table.classList.add('u-full-width');
+    const thead = document.createElement('thead');
+    thead.innerHTML = `
+        <tr>
+            <th>Imagen</th>
+            <th>Curso</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+        </tr>
+    `;
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    compras.forEach(compra => {
+        const { titulo, cantidad, total, imagen } = compra;
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><img src="${imagen}" width="100"></td>
+            <td>${titulo}</td>
+            <td>${cantidad}</td>
+            <td>$${total}</td>
+        `;
+        tbody.appendChild(row);
+    });
+    table.appendChild(tbody);
+    comprasContainer.appendChild(table);
+
+    document.body.appendChild(comprasContainer);
 };
 
 document.addEventListener('DOMContentLoaded', () => {

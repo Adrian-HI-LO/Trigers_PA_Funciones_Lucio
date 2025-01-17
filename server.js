@@ -72,7 +72,7 @@ app.post('/realizar_compra', (req, res) => {
 app.get('/ver_compras', (req, res) => {
     const { cliente_id } = req.query;
     const query = `
-        SELECT c.titulo, co.cantidad, co.total
+        SELECT c.titulo, c.imagen, co.cantidad, co.total
         FROM compras co
         JOIN cursos c ON co.curso_id = c.id
         WHERE co.cliente_id = ?
