@@ -1,39 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/src/output.css" rel="stylesheet">
     <title>Registro e Inicio de Sesión</title>
-    <link rel="stylesheet" href="./css/registro.css">
 </head>
-<body>
-    <img class="login_img" src="./img/login.png" alt="Persona">
-
-    <div class="container">
-        <div class="dosCajas">
-            <h2 class="uno">Registro de Usuario</h2>
-            <form id="registro-form">
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
-                <button type="submit" class="button-primary">Registrar</button>
-            </form>
+<body class="bg-gray-800">
+    <section>
+        <div class="flex justify-center items-center mt-[10px] bg-linear-to-r from-gray-500 to-gray-950 w-200 m-auto rounded-2xl py-2">
+            <h1 class="text-amber-400 text-4xl font-light uppercase">Tienda en linea</h1>
         </div>
-        <div class="dosCajas loginCaja">
-            <h2 class="dos">Inicio de Sesión</h2>
-            <form id="login-form">
-                <label class="inp_dos" for="login-email">Email:</label>
-                <input class="inp_dos" type="email" id="login-email" name="email" required>
-                <label class="inp_dos" for="login-password">Contraseña:</label>
-                <input class="inp_dos" type="password" id="login-password" name="password" required>
-                <button type="submit" class="button-secundary">Iniciar Sesión</button>
-            </form>
+        <div class="flex h-screen">
+            <!-- Div para el registro -->
+            <div class="w-1/2 bg-transparent flex items-center justify-center text-white">
+                <fieldset class="bg-gray-950 w-[380px] mx-auto mt-[20px] rounded-lg p-5">
+                    <legend class="text-gray-200 font-bold relative left-[5px] tracking-[5px]">REGISTRO</legend>
+                    <form id="registro-form">
+                        <div>
+                            <input type="text" id="nombre" name="nombre" class="border border-gray-300 text-white w-full my-[15px] px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-600 placeholder:text-gray-300 placeholder:font-bold" placeholder="Nombre" required>
+                        </div>
+                        <div>
+                            <input type="email" id="email" name="email" class="border border-gray-300 text-white w-full my-[15px] px-3 py-2 focus:outline-none focus:ring-1 focus:ring-amber-400 placeholder:text-gray-300 placeholder:font-bold" placeholder="Correo Electrónico" required>
+                        </div>
+                        <div class="relative">
+                            <input type="password" id="password" name="password" class="border border-gray-300 text-white w-full mt-[25px] px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-400 placeholder:text-gray-300 placeholder:font-bold" placeholder="Contraseña" required>
+                            <button id="togglePassword" type="button" class="absolute inset-y-0 right-3 flex items-center text-amber-400 hover:text-amber-700 mt-[25px]">
+                                <!-- Icono de ojo abierto -->
+                                <svg id="eyeOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12s3.75-6.75 9.75-6.75 9.75 6.75 9.75 6.75-3.75 6.75-9.75 6.75S2.25 12 2.25 12z" />
+                                </svg>
+                                <!-- Icono de ojo cerrado (oculto por defecto) -->
+                                <svg id="eyeClosed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 hidden">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.53a10.477 10.477 0 00-1.73 3.47 10.5 10.5 0 0019.5 0 10.477 10.477 0 00-1.73-3.47M9.87 9.87a3 3 0 014.24 4.24M15.73 15.73A7.5 7.5 0 016 6m12 12l-3.27-3.27" />
+                                </svg>
+                            </button>
+                        </div>
+                        <button type="submit" class="bg-white w-full mt-[20px] rounded-md py-[3px] hover:bg-gray-400 transition-colors duration-300 ease-in-out">
+                            <span class="text-gray-900 font-bold">Registrar</span>
+                        </button>
+                        <button type="reset" class="bg-gray-600 w-full mt-[10px] rounded-md cursor-pointer hover:bg-gray-800 transition-colors duration-300 ease-in-out py-[3px]">
+                            <span class="text-white font-bold">Limpiar</span>
+                        </button>
+                    </form>
+                </fieldset>
+            </div>
+            
+            <!-- Div para el Login -->
+            <div class="w-1/2 bg-transparent flex items-center justify-center text-white">
+                <fieldset class="bg-gray-950 w-[380px] mx-auto mt-[20px] rounded-lg p-5">
+                    <legend class="text-white px-[5px] rounded-md font-bold relative left-[5px] tracking-[5px] uppercase">Iniciar Sesion</legend>
+                    <form id="login-form">
+                        <input type="email" id="login-email" name="email" class="border border-gray-300 text-gray-300 w-full mt-[15px] px-3 py-2 focus:outline-none focus:ring-1 focus:ring-pink-400 placeholder:text-white placeholder:font-bold" placeholder="Correo Electrónico" required>
+                        
+                        <p class="text-red-500 font-bold text-[20px] mt-[10px] hidden" id="msjEmail">Email Inválido</p>
+                        
+                        <div class="relative">
+                            <input type="password" id="login-password" name="password" class="border border-gray-300 text-gray-300 w-full mt-[25px] px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-400 placeholder:text-white placeholder:font-bold" placeholder="Contraseña" required>
+                            <button id="toggleLoginPassword" type="button" class="absolute inset-y-0 right-3 flex items-center text-red-600 hover:text-red-900 mt-[25px]">
+                                <!-- Icono de ojo abierto -->
+                                <svg id="loginEyeOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12s3.75-6.75 9.75-6.75 9.75 6.75 9.75 6.75-3.75 6.75-9.75 6.75S2.25 12 2.25 12z" />
+                                </svg>
+                                <!-- Icono de ojo cerrado (oculto por defecto) -->
+                                <svg id="loginEyeClosed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 hidden">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.53a10.477 10.477 0 00-1.73 3.47 10.5 10.5 0 0019.5 0 10.477 10.477 0 00-1.73-3.47M9.87 9.87a3 3 0 014.24 4.24M15.73 15.73A7.5 7.5 0 016 6m12 12l-3.27-3.27" />
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <button type="submit" class="bg-amber-400 w-full mt-[20px] rounded-md cursor-pointer hover:bg-amber-600 transition-colors duration-300 ease-in-out py-[3px]">
+                            <span class="text-gray-900 font-bold">Iniciar Sesión</span>
+                        </button>
+                        <button type="reset" class="bg-gray-700 w-full mt-[10px] rounded-md cursor-pointer hover:bg-gray-800 transition-colors duration-300 ease-in-out py-[3px]">
+                            <span class="text-white font-bold">Limpiar</span>
+                        </button>
+                    </form>
+                </fieldset>
+            </div>
         </div>
-    </div>
-
-    <script src="js/registro.js"></script>
+    </section>
+    <!-- Validaciones locales -->
+    <script src="./js/registro/ui.js" defer></script>
+    <!-- Conectar con el servidor -->
+    <script src="./js/registro/registro.js" defer></script>
 </body>
 </html>

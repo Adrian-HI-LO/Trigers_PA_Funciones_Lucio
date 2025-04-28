@@ -12,7 +12,7 @@ app.use(cors()); // Usar cors
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'danielyeray5', // Reemplaza 'tu_contraseña_aqui' con la contraseña correcta
+    password: '20ADs34lL./', // Reemplaza 'tu_contraseña_aqui' con la contraseña correcta
     database: 'CarritoDB',
     port: 3306
 });
