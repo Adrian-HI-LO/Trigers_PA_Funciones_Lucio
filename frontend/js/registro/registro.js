@@ -1,4 +1,4 @@
-import Swal from 'sweetalert2';
+
 
 document.querySelector('#registro-form').addEventListener('submit', e => {
     e.preventDefault();
