@@ -1,5 +1,3 @@
-
-
 document.querySelector('#registro-form').addEventListener('submit', e => {
     e.preventDefault();
     const nombre = document.querySelector('#nombre').value;
@@ -14,21 +12,19 @@ document.querySelector('#registro-form').addEventListener('submit', e => {
     })
     .then(response => response.json())
     .then(data => {
+        const alertContainer = document.createElement('div');
+        alertContainer.className = 'fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded';
+        alertContainer.role = 'alert';
+
         if (data.success) {
-            Swal.fire({
-                icon: 'success',
-                title: '¡Éxito!',
-                text: 'Usuario registrado con éxito',
-                confirmButtonText: 'Aceptar'
-            });
+            alertContainer.innerHTML = '<strong class="font-bold">¡Éxito!</strong> <span class="block sm:inline">Usuario registrado con éxito.</span>';
         } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Error al registrar usuario',
-                confirmButtonText: 'Aceptar'
-            });
+            alertContainer.className = 'fixed top-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded';
+            alertContainer.innerHTML = '<strong class="font-bold">Error:</strong> <span class="block sm:inline">Error al registrar usuario.</span>';
         }
+
+        document.body.appendChild(alertContainer);
+        setTimeout(() => alertContainer.remove(), 3000);
     });
 });
 
@@ -45,18 +41,20 @@ document.querySelector('#login-form').addEventListener('submit', e => {
     })
     .then(response => response.json())
     .then(data => {
+        const alertContainer = document.createElement('div');
+        alertContainer.className = 'fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded';
+        alertContainer.role = 'alert';
+
         if (data.success) {
             localStorage.setItem('cliente_id', data.cliente_id);
-            localStorage.setItem('is_admin', data.is_admin.toString()); // Almacenar estado de administrador como cadena
-            console.log('is_admin:', data.is_admin); // Agregar mensaje de consola
+            localStorage.setItem('is_admin', data.is_admin.toString());
+            console.log('is_admin:', data.is_admin);
             window.location.href = 'index.html';
         } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Error al iniciar sesión',
-                confirmButtonText: 'Aceptar'
-            });
+            alertContainer.className = 'fixed top-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded';
+            alertContainer.innerHTML = '<strong class="font-bold">Error:</strong> <span class="block sm:inline">Error al iniciar sesión.</span>';
+            document.body.appendChild(alertContainer);
+            setTimeout(() => alertContainer.remove(), 3000);
         }
     });
 });
