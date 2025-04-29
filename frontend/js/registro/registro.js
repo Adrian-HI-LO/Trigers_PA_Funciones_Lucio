@@ -1,3 +1,5 @@
+import Swal from 'sweetalert2';
+
 document.querySelector('#registro-form').addEventListener('submit', e => {
     e.preventDefault();
     const nombre = document.querySelector('#nombre').value;
@@ -13,9 +15,19 @@ document.querySelector('#registro-form').addEventListener('submit', e => {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert('Usuario registrado con éxito');
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: 'Usuario registrado con éxito',
+                confirmButtonText: 'Aceptar'
+            });
         } else {
-            alert('Error al registrar usuario');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al registrar usuario',
+                confirmButtonText: 'Aceptar'
+            });
         }
     });
 });
@@ -39,7 +51,12 @@ document.querySelector('#login-form').addEventListener('submit', e => {
             console.log('is_admin:', data.is_admin); // Agregar mensaje de consola
             window.location.href = 'index.html';
         } else {
-            alert('Error al iniciar sesión');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al iniciar sesión',
+                confirmButtonText: 'Aceptar'
+            });
         }
     });
 });
