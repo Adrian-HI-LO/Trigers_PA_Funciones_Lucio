@@ -1,2 +1,4 @@
 # Ignorar directorios de dependencias
 node_modules/
+package-lock.json
+mysql/
