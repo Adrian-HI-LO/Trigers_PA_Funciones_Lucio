@@ -18,6 +18,9 @@ document.querySelector('#registro-form').addEventListener('submit', e => {
 
         if (data.success) {
             alertContainer.innerHTML = '<strong class="font-bold">¡Éxito!</strong> <span class="block sm:inline">Usuario registrado con éxito.</span>';
+            // Limpiar el formulario
+            const formulario_registro = document.querySelector( '#registro-form' )
+            formulario_registro.reset()
         } else {
             alertContainer.className = 'fixed top-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded';
             alertContainer.innerHTML = '<strong class="font-bold">Error:</strong> <span class="block sm:inline">Error al registrar usuario.</span>';
@@ -49,7 +52,7 @@ document.querySelector('#login-form').addEventListener('submit', e => {
             localStorage.setItem('cliente_id', data.cliente_id);
             localStorage.setItem('is_admin', data.is_admin.toString());
             console.log('is_admin:', data.is_admin);
-            window.location.href = 'index.html';
+            window.location.href = 'inicio.html';
         } else {
             alertContainer.className = 'fixed top-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded';
             alertContainer.innerHTML = '<strong class="font-bold">Error:</strong> <span class="block sm:inline">Error al iniciar sesión.</span>';

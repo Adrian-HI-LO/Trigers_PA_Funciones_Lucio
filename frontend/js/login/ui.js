@@ -156,9 +156,4 @@ document.addEventListener('DOMContentLoaded', () => {
         // Aquí iría la lógica para procesar el registro
     });
 
-    /* document.getElementById('login-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        console.log('Formulario de login enviado');
-        // Aquí iría la lógica para procesar el login
-    }); */
 });

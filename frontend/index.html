@@ -1,306 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Carrito</title>
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/skeleton.css">
-    <link rel="stylesheet" href="css/custom.css">
+    <link href="./css/src/output.css" rel="stylesheet">
+    <title>Registro e Inicio de Sesión</title>
 </head>
-<body class="dark-mode">
-<header id="header" class="header">
-    <div class="container">
-        <div class="row">
-            <div class="four columns">
-                <img src="img/logo.jpg" id="logo">
-            </div>
-            <div class="two columns u-pull-right">
-                <ul id="user-options" style="display: none;">
-                    <li class="submenu">
-                        <img src="img/cart.png" id="img-carrito">
-                        <div id="carrito">
-                            <table id="lista-carrito" class="u-full-width">
-                                <thead>
-                                    <tr>
-                                        <th>Imagen</th>
-                                        <th>Nombre</th>
-                                        <th>Precio/Descuento</th>
-                                        <th>Cantidad</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                            <a href="#" id="calcular-compra" class="button u-full-width">Calcular Compra</a>
-                            <a href="#" id="vaciar-carrito" class="button u-full-width">Vaciar Carrito</a>
-                            <a href="#" id="realizar-compra" class="button u-full-width">Realizar Compra</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+<body class="bg-gray-800">
+    <section>
+        <div class="flex justify-center items-center mt-[10px] bg-linear-to-r from-gray-600 to-gray-950 w-200 m-auto rounded-b-4xl py-2">
+            <h1 class="text-amber-400 text-4xl font-light uppercase">Tienda en linea</h1>
         </div>
-    </div>
-</header>
-
-<div id="hero">
-    <div class="container">
-        <div class="row">
-            <div class="six columns">
-                <div class="contenido-hero">
-                    <h2>Aprende algo nuevo</h2>
-                    <p>Todos los cursos a $15</p>
-                    <form action="#" id="busqueda" method="post" class="formulario">
-                        <input class="u-full-width" type="text" placeholder="¿Que te gustaría Aprender?" id="buscador">
-                        <input type="submit" id="submit-buscador" class="submit-buscador">
+        <div class="flex h-screen mt-[-30px]">
+            <!-- Div para el registro -->
+            <div class="w-1/2 bg-transparent flex items-center justify-center text-white">
+                <fieldset class="bg-gray-950 w-[90%] mx-auto mt-[20px] rounded-lg p-5">
+                    <legend class="text-gray-200 font-bold relative left-[5px] tracking-[5px]">REGISTRO</legend>
+                    <form id="registro-form">
+                        <div>
+                            <input type="text" id="nombre" name="nombre" class="border border-gray-300 text-white w-full my-[15px] px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-600 placeholder:text-gray-300 placeholder:font-bold" placeholder="Nombre" required>
+                        </div>
+                        <div>
+                            <input type="email" id="email" name="email" class="border border-gray-300 text-white w-full my-[15px] px-3 py-2 focus:outline-none focus:ring-1 focus:ring-amber-400 placeholder:text-gray-300 placeholder:font-bold" placeholder="Correo Electrónico" required>
+                        </div>
+                        <div class="relative">
+                            <input type="password" id="password" name="password" class="border border-gray-300 text-white w-full mt-[25px] px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-400 placeholder:text-gray-300 placeholder:font-bold" placeholder="Contraseña" required>
+                            <button id="togglePassword" type="button" class="absolute inset-y-0 right-3 flex items-center text-amber-400 hover:text-amber-700 mt-[25px]">
+                                <!-- Icono de ojo abierto -->
+                                <svg id="eyeOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12s3.75-6.75 9.75-6.75 9.75 6.75 9.75 6.75-3.75 6.75-9.75 6.75S2.25 12 2.25 12z" />
+                                </svg>
+                                <!-- Icono de ojo cerrado (oculto por defecto) -->
+                                <svg id="eyeClosed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 hidden">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.53a10.477 10.477 0 00-1.73 3.47 10.5 10.5 0 0019.5 0 10.477 10.477 0 00-1.73-3.47M9.87 9.87a3 3 0 014.24 4.24M15.73 15.73A7.5 7.5 0 016 6m12 12l-3.27-3.27" />
+                                </svg>
+                            </button>
+                        </div>
+                        <button type="submit" class="bg-white w-full mt-[20px] rounded-md py-[3px] hover:bg-gray-400 transition-colors duration-300 ease-in-out">
+                            <span class="text-gray-900 font-bold">Registrar</span>
+                        </button>
+                        <button type="reset" class="bg-gray-600 w-full mt-[10px] rounded-md cursor-pointer hover:bg-gray-800 transition-colors duration-300 ease-in-out py-[3px]">
+                            <span class="text-white font-bold">Limpiar</span>
+                        </button>
                     </form>
-                </div>
+                </fieldset>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="barra">
-    <div class="container">
-        <div class="row">
-            <div class="four columns icono icono1">
-                <p>20,000 Cursos en línea <br> Explora los temas más recientes</p>
-            </div>
-            <div class="four columns icono icono2">
-                <p>Instructores Expertos <br> Aprende con distintos estilos</p>
-            </div>
-            <div class="four columns icono icono3">
-                <p>Acceso de por vida <br> Aprende a tu ritmo</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="lista-cursos" class="container">
-    <h1 id="encabezado" class="encabezado">Cursos En Línea</h1>
-    <div class="row">
-        <div class="four columns">
-            <div class="card">
-                <img src="img/curso1.jpg" class="imagen-curso u-full-width">
-                <div class="info-card">
-                    <h4>HTML5, CSS3, JavaScript para Principiantes</h4>
-                    <p>Juan Pedro</p>
-                    <img src="img/estrellas.png">
-                    <p class="precio">$200  <span class="u-pull-right ">$15</span></p>
-                    <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="1">Agregar Al Carrito</a>
-                </div>
-            </div> <!--.card-->
-        </div>
-        <div class="four columns">
-                <div class="card">
-                    <img src="img/curso2.jpg" class="imagen-curso u-full-width">
-                    <div class="info-card">
-                        <h4>Curso de Comida Vegetariana</h4>
-                        <p>Juan Pedro</p>
-                        <img src="img/estrellas.png">
-                        <p class="precio">$200  <span class="u-pull-right ">$15</span></p>
-                        <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="2">Agregar Al Carrito</a>
-                    </div>
-                </div>
-        </div>
-        <div class="four columns">
-                <div class="card">
-                    <img src="img/curso3.jpg" class="imagen-curso u-full-width">
-                    <div class="info-card">
-                        <h4>Guitarra para Principiantes</h4>
-                        <p>Juan Pedro</p>
-                        <img src="img/estrellas.png">
-                        <p class="precio">$200  <span class="u-pull-right ">$15</span></p>
-                        <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="3">Agregar Al Carrito</a>
-                    </div>
-                </div> <!--.card-->
-        </div>
-
-    </div> <!--.row-->
-    <div class="row">
-        <div class="four columns">
-            <div class="card">
-                <img src="img/curso4.jpg" class="imagen-curso u-full-width">
-                <div class="info-card">
-                    <h4>Huerto en tu casa</h4>
-                    <p>Juan Pedro</p>
-                    <img src="img/estrellas.png">
-                    <p class="precio">$200  <span class="u-pull-right ">$15</span></p>
-                    <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="4">Agregar Al Carrito</a>
-                </div>
-            </div> <!--.card-->
-        </div>
-        <div class="four columns">
-                <div class="card">
-                    <img src="img/curso5.jpg" class="imagen-curso u-full-width">
-                    <div class="info-card">
-                        <h4>Decoración con productos de tu hogar</h4>
-                        <p>Juan Pedro</p>
-                        <img src="img/estrellas.png">
-                        <p class="precio">$200  <span class="u-pull-right ">$15</span></p>
-                        <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="5">Agregar Al Carrito</a>
-                    </div>
-                </div> <!--.card-->
-        </div>
-        <div class="four columns">
-                <div class="card">
-                    <img src="img/curso1.jpg" class="imagen-curso u-full-width">
-                    <div class="info-card">
-                        <h4>Diseño Web para Principiantes</h4>
-                        <p>Juan Pedro</p>
-                        <img src="img/estrellas.png">
-                        <p class="precio">$200  <span class="u-pull-right ">$15</span></p>
-                        <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="6">Agregar Al Carrito</a>
-                    </div>
-                </div> <!--.card-->
-        </div>
-    </div> <!--.row-->
-    <div class="row">
-        <div class="four columns">
-            <div class="card">
-                <img src="img/curso2.jpg" class="imagen-curso u-full-width">
-                <div class="info-card">
-                    <h4>Comida Mexicana para principiantes</h4>
-                    <p>Juan Pedro</p>
-                    <img src="img/estrellas.png">
-                    <p class="precio">$200  <span class="u-pull-right ">$15</span></p>
-                    <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="7">Agregar Al Carrito</a>
-                </div>
-            </div> <!--.card-->
-        </div>
-        <div class="four columns">
-                <div class="card">
-                    <img src="img/curso3.jpg" class="imagen-curso u-full-width">
-                    <div class="info-card">
-                        <h4>Estudio Musical en tu casa</h4>
-                        <p>Juan Pedro</p>
-                        <img src="img/estrellas.png">
-                        <p class="precio">$200  <span class="u-pull-right ">$15</span></p>
-                        <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="8">Agregar Al Carrito</a>
-                    </div>
-                </div> <!--.card-->
-        </div>
-        <div class="four columns">
-                <div class="card">
-                    <img src="img/curso4.jpg" class="imagen-curso u-full-width">
-                    <div class="info-card">
-                        <h4>Cosecha tus propias frutas y verduras</h4>
-                        <p>Juan Pedro</p>
-                        <img src="img/estrellas.png">
-                        <p class="precio">$200  <span class="u-pull-right ">$15</span></p>
-                        <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="9">Agregar Al Carrito</a>
-                    </div>
-                </div> <!--.card-->
-        </div>
-    </div> <!--.row-->
-    <div class="row">
-            <div class="four columns">
-                <div class="card">
-                    <img src="img/curso5.jpg" class="imagen-curso u-full-width">
-                    <div class="info-card">
-                        <h4>Prepara galletas caseras</h4>
-                        <p>Juan Pedro</p>
-                        <img src="img/estrellas.png">
-                        <p class="precio">$200  <span class="u-pull-right ">$15</span></p>
-                        <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="10">Agregar Al Carrito</a>
-                    </div>
-                </div> <!--.card-->
-            </div>
-            <div class="four columns">
-                    <div class="card">
-                        <img src="img/curso1.jpg" class="imagen-curso u-full-width">
-                        <div class="info-card">
-                            <h4>JavaScript Moderno con ES6</h4>
-                            <p>Juan Pedro</p>
-                            <img src="img/estrellas.png">
-                            <p class="precio">$200  <span class="u-pull-right ">$15</span></p>
-                            <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="11">Agregar Al Carrito</a>
+            
+            <!-- Div para el Login -->
+            <div class="w-1/2 bg-transparent flex items-center justify-center text-white">
+                <fieldset class="bg-gray-950 w-[90%] mx-auto mt-[20px] rounded-lg p-5">
+                    <legend class="text-white px-[5px] rounded-md font-bold relative left-[5px] tracking-[5px] uppercase">Iniciar Sesion</legend>
+                    <form id="login-form">
+                        <input type="email" id="login-email" name="email" class="border border-gray-300 text-gray-300 w-full mt-[15px] px-3 py-2 focus:outline-none focus:ring-1 focus:ring-pink-400 placeholder:text-white placeholder:font-bold" placeholder="Correo Electrónico" required>
+                        
+                        <p class="text-red-500 font-bold text-[20px] mt-[10px] hidden" id="msjEmail">Email Inválido</p>
+                        
+                        <div class="relative">
+                            <input type="password" id="login-password" name="password" class="border border-gray-300 text-gray-300 w-full mt-[25px] px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-400 placeholder:text-white placeholder:font-bold" placeholder="Contraseña" required>
+                            <button id="toggleLoginPassword" type="button" class="absolute inset-y-0 right-3 flex items-center text-red-600 hover:text-red-900 mt-[25px]">
+                                <!-- Icono de ojo abierto -->
+                                <svg id="loginEyeOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12s3.75-6.75 9.75-6.75 9.75 6.75 9.75 6.75-3.75 6.75-9.75 6.75S2.25 12 2.25 12z" />
+                                </svg>
+                                <!-- Icono de ojo cerrado (oculto por defecto) -->
+                                <svg id="loginEyeClosed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 hidden">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.53a10.477 10.477 0 00-1.73 3.47 10.5 10.5 0 0019.5 0 10.477 10.477 0 00-1.73-3.47M9.87 9.87a3 3 0 014.24 4.24M15.73 15.73A7.5 7.5 0 016 6m12 12l-3.27-3.27" />
+                                </svg>
+                            </button>
                         </div>
-                    </div> <!--.card-->
+                        
+                        <button type="submit" class="bg-amber-400 w-full mt-[20px] rounded-md cursor-pointer hover:bg-amber-600 transition-colors duration-300 ease-in-out py-[3px]">
+                            <span class="text-gray-900 font-bold">Iniciar Sesión</span>
+                        </button>
+                        <button type="reset" class="bg-gray-700 w-full mt-[10px] rounded-md cursor-pointer hover:bg-gray-800 transition-colors duration-300 ease-in-out py-[3px]">
+                            <span class="text-white font-bold">Limpiar</span>
+                        </button>
+                    </form>
+                </fieldset>
             </div>
-            <div class="four columns">
-                    <div class="card">
-                        <img src="img/curso2.jpg" class="imagen-curso u-full-width">
-                        <div class="info-card">
-                            <h4>100 Recetas de Comida Natural</h4>
-                            <p>Juan Pedro</p>
-                            <img src="img/estrellas.png">
-                            <p class="precio">$200  <span class="u-pull-right ">$15</span></p>
-                            <a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="12">Agregar Al Carrito</a>
-                        </div>
-                    </div> <!--.card-->
-            </div>
-        </div> <!--.row-->
-</div>  
-
-<footer id="footer" class="footer">
-    <div class="container">
-        <div class="row">
-                <div class="four columns">
-                        <nav id="principal" class="menu">
-                            <a class="enlace" href="#">Para tu Negocio</a>
-                            <a class="enlace" href="#">Conviertete en Instructor</a>
-                            <a class="enlace" href="#">Aplicaciones Móviles</a>
-                            <a class="enlace" href="#">Soporte</a>
-                            <a class="enlace" href="#">Temas</a>
-                        </nav>
-                </div>
-                <div class="four columns">
-                        <nav id="secundaria" class="menu">
-                            <a class="enlace" href="#">¿Quienes Somos?</a>
-                            <a class="enlace" href="#">Empleo</a>
-                            <a class="enlace" href="#">Blog</a>
-                        </nav>
-                </div>
         </div>
-    </div>
-</footer>
-
-<div class="container">
-    <div id="user-options-buttons" class="row" style="display: none;">
-        <div class="twelve columns">
-            <button id="ver-compras" class="button-primary u-full-width">Ver Compras</button>
-            <button id="ver-total-compras" class="button-primary u-full-width">Ver Total de Compras</button>
-        </div>
-    </div>
-    <div id="admin-options" class="flex gap-5" style="display: none;">
-        <button 
-            type="submit"
-            class="flex-1 bg-pink-600 text-white flex justify-center gap-2 items-center p-3 opacity-50"
-            id="agregar-curso_admin"
-        >
-            Agregar Curso
-        </button>
-        <button 
-        type="submit"
-        class="flex-1 bg-pink-600 text-white flex justify-center gap-2 items-center p-3 opacity-50"
-        id="eliminar-curso_admin"
-    >
-        Eliminar Curso
-    </button>
-    </div>
-    <div id="tabla-eliminar-curso" class="container mt-5" style="display: none;">
-        <table class="table table-dark table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre del Curso</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody id="cursos-tabla">
-                <!-- Cursos se cargarán aquí -->
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="js/app.js"></script>
-<script>
-    document.querySelector('#ver-total-compras').addEventListener('click', mostrarTotalCompras);
-</script>
-
+    </section>
+    <!-- Validaciones locales -->
+    <script src="./js/login/ui.js" defer></script>
+    <!-- Conectar con el servidor -->
+    <script src="./js/login/registro.js" defer></script>
 </body>
 </html>
