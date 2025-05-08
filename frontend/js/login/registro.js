@@ -60,4 +60,5 @@ document.querySelector('#login-form').addEventListener('submit', e => {
             setTimeout(() => alertContainer.remove(), 3000);
         }
     });
+    
 });
